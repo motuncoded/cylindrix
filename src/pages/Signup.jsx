@@ -1,15 +1,12 @@
 import React from "react";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+import Layout from "../components/Layout";
+import { Link } from "@tanstack/react-router";
 
 const Signup = () => {
   return (
     <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-flow-col  gap-4 min-h-screen">
-      <section className="bg-red-50 hidden md:flex  items-center">
-        <img
-          src="/flat-illustration-female-team-leader.webp"
-          alt="illustration"
-        />
-      </section>
+      <Layout />
       <section className="flex justify-center items-center flex-col  p-4">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">
           Create Your Account
@@ -20,26 +17,28 @@ const Signup = () => {
         <form className="flex flex-col gap-4 max-w-[500px] w-full  mx-auto">
           <div className="flex flex-col ">
             {" "}
-            <label htmlFor="firstName" className="mb-2 text-gray-800">
-              First Name
+            <label htmlFor="fullName" className="mb-2 text-gray-800">
+              Full Name
             </label>
             <input
               type="text"
               name=""
               id=""
               className="w-full border-2 border-red-200 p-2 rounded-md focus-within:border-red-400"
+              placeholder="Jane Joy"
             />
           </div>
           <div className="flex flex-col">
             {" "}
-            <label htmlFor="lastName" className="mb-2 text-gray-800">
-              Last Name
+            <label htmlFor="username" className="mb-2 text-gray-800">
+              Username
             </label>
             <input
               type="text"
               name=""
               id=""
               className="border-2 border-red-200 p-2 rounded-md focus-within:border-red-400"
+              placeholder="jane_joy"
             />
           </div>
 
@@ -53,6 +52,7 @@ const Signup = () => {
               name=""
               id=""
               className="border-2 border-red-200 p-2 rounded-md focus-within:border-red-400 w-full"
+              placeholder="jacy_joy@gmail.com"
             />
           </div>
           <div className="flex flex-col w-full">
@@ -81,9 +81,12 @@ const Signup = () => {
           </div>
           <p className="text-right -mt-2 text-gray-600">
             Already have an account?{" "}
-            <a href="#" className="font-medium text-red-500 hover:text-red-600">
+            <Link
+              to="signin"
+              className="font-medium text-red-500 hover:text-red-600"
+            >
               Sign in
-            </a>
+            </Link>
           </p>
           <div className="flex justify-center mt-2">
             {" "}
