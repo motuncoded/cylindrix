@@ -4,6 +4,12 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { Link } from "@tanstack/react-router";
 
 const Signin = () => {
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
+
   return (
     <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-flow-col  gap-4 min-h-screen">
       <Layout />
@@ -15,15 +21,15 @@ const Signin = () => {
         <form className="flex flex-col gap-4 max-w-[500px] w-full  mx-auto">
           <div className="flex flex-col">
             {" "}
-            <label htmlFor="username" className="mb-2 text-gray-800">
-              Username
+            <label htmlFor="email" className="mb-2 text-gray-800">
+              Email
             </label>
             <input
-              type="text"
-              name=""
-              id="username"
-              className="border-2 border-red-200 p-2 rounded-md focus-within:border-red-400"
-              placeholder="jane_joy"
+              type="email"
+              name="email"
+              id="email"
+              className="border-2 border-red-200 p-2 rounded-md focus-within:border-red-400 outline-none"
+              placeholder="jane_joy@email.com"
             />
           </div>
           <div className="flex flex-col w-full">
@@ -33,9 +39,16 @@ const Signin = () => {
             </label>
             <div className="flex justify-between items-center border-2 border-red-200 p-2 rounded-md focus-within:border-red-400">
               {" "}
-              <input type="password" name="" id="password" className="" />
-              <IoEyeOutline className="text-red-400" />
-              {/* <IoEyeOffOutline /> */}
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                id="password"
+                className="w-full outline-none"
+                placeholder="********"
+              />
+              <button onClick={handleShowPassword}>
+                {showPassword ? <IoEyeOutline /> : <IoEyeOffOutline />}{" "}
+              </button>
             </div>
           </div>
 
