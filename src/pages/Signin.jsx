@@ -1,13 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../components/Layout";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { Link } from "@tanstack/react-router";
+import useSignin from "../hooks/useSignin";
 
 const Signin = () => {
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const { mutate: signin, isPending } = useSignin();
 
   const handleShowPassword = () => {
     setShowPassword((prev) => !prev);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError("");
+
+    if (!formData.email || !formData.password) {
+      setError("All fields are required");
+      return;
+    }
+
+    signin(
+      {
+        email: formData.email,
+        password: formData.password,
+      },
+      {
+        onError: (error) => {
+          setError(error.message || "Signin failed. Please try again.");
+        },
+      },
+    );
   };
 
   return (
@@ -18,7 +55,13 @@ const Signin = () => {
           Access Your Account
         </h2>
         <p className="text-gray-800 mb-4">Login your account with CylindriX</p>{" "}
-        <form className="flex flex-col gap-4 max-w-[500px] w-full  mx-auto">
+        {error && (
+          <p className="bg-red-200 text-red-800 p-2 rounded-md mb-4">{error}</p>
+        )}
+        <form
+          className="flex flex-col gap-4 max-w-[500px] w-full  mx-auto"
+          onSubmit={handleSubmit}
+        >
           <div className="flex flex-col">
             {" "}
             <label htmlFor="email" className="mb-2 text-gray-800">
@@ -28,6 +71,8 @@ const Signin = () => {
               type="email"
               name="email"
               id="email"
+              value={formData.email}
+              onChange={handleChange}
               className="border-2 border-red-200 p-2 rounded-md focus-within:border-red-400 outline-none"
               placeholder="jane_joy@email.com"
             />
@@ -43,6 +88,8 @@ const Signin = () => {
                 type={showPassword ? "text" : "password"}
                 name="password"
                 id="password"
+                value={formData.password}
+                onChange={handleChange}
                 className="w-full outline-none"
                 placeholder="********"
               />
@@ -63,8 +110,11 @@ const Signin = () => {
           </p>
           <div className="flex justify-center mt-2">
             {" "}
-            <button className="bg-red-400 text-white p-3  w-[200px]  font-medium rounded-md hover:bg-red-400/50 transition-colors">
-              Signin
+            <button
+              type="submit"
+              className="bg-red-400 text-white p-3  w-[200px]  font-medium rounded-md hover:bg-red-400/50 transition-colors"
+            >
+              {isPending ? "Signing..." : "Signin"}
             </button>
           </div>
         </form>

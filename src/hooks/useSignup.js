@@ -2,15 +2,18 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 
 const signupUser = async (userData) => {
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
-    method: "POST",
-    headers: { 
-      "Content-Type": "application/json",
+  const response = await fetch(
+    `${import.meta.env.VITE_API_URL}/api/auth/register`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
     },
-    body: JSON.stringify(userData),
-  });
+  );
 
-if (!response.ok) {
+  if (!response.ok) {
     let errorMessage = "Failed to register user";
     try {
       const errorData = await response.json();
