@@ -33,6 +33,9 @@ const useSignin = () => {
     mutationFn: signinUser,
     onSuccess: (data) => {
       console.log("Signin successful", data);
+       if (data.token) {
+        localStorage.setItem('authToken', data.token); // only if you understand XSS risks
+      }
       navigate({ to: "/dashboard" });
     },
 
